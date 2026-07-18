@@ -14,7 +14,6 @@ class Rectangle:
         """Retrieves the width."""
         return self.__width
 
-    @size = value
     @width.setter
     def width(self, value):
         """Sets the width with validation."""
