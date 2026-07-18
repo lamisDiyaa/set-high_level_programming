@@ -1,1 +1,1 @@
-High level programming repository
+Python Classes and Objects Project
