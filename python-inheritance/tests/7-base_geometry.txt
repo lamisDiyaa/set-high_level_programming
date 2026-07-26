@@ -1,0 +1,49 @@
+=================================
+How to Use 7-base_geometry.py
+=================================
+
+This module defines a class `BaseGeometry`.
+
+Usage
+=====
+
+Import the class:
+    >>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+    >>> bg = BaseGeometry()
+
+Testing integer_validator:
+    >>> bg.integer_validator("my_int", 12)
+    >>> bg.integer_validator("width", 89)
+
+Testing area():
+    >>> bg.area()
+    Traceback (most recent call last):
+    ...
+    Exception: area() is not implemented
+
+Testing TypeError exceptions:
+    >>> bg.integer_validator("name", "John")
+    Traceback (most recent call last):
+    ...
+    TypeError: name must be an integer
+
+    >>> bg.integer_validator("age", [1, 2, 3])
+    Traceback (most recent call last):
+    ...
+    TypeError: age must be an integer
+
+    >>> bg.integer_validator("bool_val", True)
+    Traceback (most recent call last):
+    ...
+    TypeError: bool_val must be an integer
+
+Testing ValueError exceptions:
+    >>> bg.integer_validator("age", 0)
+    Traceback (most recent call last):
+    ...
+    ValueError: age must be greater than 0
+
+    >>> bg.integer_validator("distance", -4)
+    Traceback (most recent call last):
+    ...
+    ValueError: distance must be greater than 0
