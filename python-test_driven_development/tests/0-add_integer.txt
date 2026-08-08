@@ -38,8 +38,14 @@ Passing None for a:
         ...
     TypeError: a must be an integer
 
-Passing float Infinity/NaN:
+Passing float Infinity:
     >>> add_integer(float('inf'))
     Traceback (most recent call last):
         ...
     OverflowError: cannot convert float infinity to integer
+
+Passing float NaN:
+    >>> add_integer(float('nan'))
+    Traceback (most recent call last):
+        ...
+    ValueError: cannot convert float NaN to integer
