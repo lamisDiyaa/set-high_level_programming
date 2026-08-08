@@ -16,20 +16,68 @@ Valid 1x2 and 2x2 matrix multiplication:
     >>> print(lazy_matrix_mul([[1, 2]], [[3, 4], [5, 6]]))
     [[13 16]]
 
-m_a is not a list/invalid:
-    >>> lazy_matrix_mul("ALX", [[5, 6], [7, 8]])
+m_a is String => TypeError: m_a must be a list:
+    >>> lazy_matrix_mul("ALX", [[1, 2], [3, 4]])
     Traceback (most recent call last):
         ...
-    ValueError: Scalar operands are not allowed, use '*' instead
+    TypeError: m_a must be a list
 
-m_b is not a list/invalid:
-    >>> lazy_matrix_mul([[5, 6], [7, 8]], "ALX")
+m_b is String => TypeError: m_b must be a list:
+    >>> lazy_matrix_mul([[1, 2], [3, 4]], "ALX")
     Traceback (most recent call last):
         ...
-    ValueError: Scalar operands are not allowed, use '*' instead
+    TypeError: m_b must be a list
 
-Incompatible matrix shapes:
-    >>> lazy_matrix_mul([[5, 6, 10], [7, 8]], [[5, 6], [7, 8]])
+m_a = empty / m_b = List of lists of number => ValueError: m_a can't be empty:
+    >>> lazy_matrix_mul([], [[1, 2], [3, 4]])
     Traceback (most recent call last):
         ...
-    ValueError: setting an array element with a sequence.
+    ValueError: m_a can't be empty
+
+m_a = List of lists of number / m_b = Empty => ValueError: m_b can't be empty:
+    >>> lazy_matrix_mul([[1, 2], [3, 4]], [])
+    Traceback (most recent call last):
+        ...
+    ValueError: m_b can't be empty
+
+m_a = List of lists of not number / m_b = List of lists of number => TypeError: m_a should contain only integers or floats:
+    >>> lazy_matrix_mul([[1, "2"]], [[3, 4], [5, 6]])
+    Traceback (most recent call last):
+        ...
+    TypeError: m_a should contain only integers or floats
+
+m_a = List of lists of number / m_b = List of lists of not number => TypeError: m_b should contain only integers or floats:
+    >>> lazy_matrix_mul([[1, 2]], [[3, "4"], [5, 6]])
+    Traceback (most recent call last):
+        ...
+    TypeError: m_b should contain only integers or floats
+
+m_a = List of lists of number various size / m_b = List of lists of number => TypeError: each row of m_a must should be of the same size:
+    >>> lazy_matrix_mul([[1, 2, 3], [4, 5]], [[1, 2], [3, 4], [5, 6]])
+    Traceback (most recent call last):
+        ...
+    TypeError: each row of m_a must should be of the same size
+
+m_a = List of lists of number / m_b = List of lists of number various size => TypeError: each row of m_b must should be of the same size:
+    >>> lazy_matrix_mul([[1, 2]], [[1, 2, 3], [4, 5]])
+    Traceback (most recent call last):
+        ...
+    TypeError: each row of m_b must should be of the same size
+
+m_a = List of lists of number / m_b = List of lists of number but not correct => ValueError: m_a and m_b can't be multiplied:
+    >>> lazy_matrix_mul([[1, 2], [3, 4]], [[1, 2, 3]])
+    Traceback (most recent call last):
+        ...
+    ValueError: m_a and m_b can't be multiplied
+
+Test present: missing one argument:
+    >>> lazy_matrix_mul([[1, 2]])
+    Traceback (most recent call last):
+        ...
+    TypeError: lazy_matrix_mul() missing 1 required positional argument: 'm_b'
+
+Test present: missing two arguments:
+    >>> lazy_matrix_mul()
+    Traceback (most recent call last):
+        ...
+    TypeError: lazy_matrix_mul() missing 2 required positional arguments: 'm_a' and 'm_b'
