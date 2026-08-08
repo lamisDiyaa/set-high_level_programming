@@ -26,3 +26,15 @@ class Square(Rectangle):
         return "[Square] ({}) {}/{} - {}".format(
             self.id, self.x, self.y, self.width
         )
+
+    def update(self, *args, **kwargs):
+        """Assigns attributes using positional or keyword arguments."""
+        attrs = ["id", "size", "x", "y"]
+        if args and len(args) > 0:
+            for i, arg in enumerate(args):
+                if i < len(attrs):
+                    setattr(self, attrs[i], arg)
+        elif kwargs:
+            for key, value in kwargs.items():
+                if hasattr(self, key):
+                    setattr(self, key, value)
