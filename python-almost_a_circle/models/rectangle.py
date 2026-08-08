@@ -86,9 +86,14 @@ class Rectangle(Base):
             self.id, self.__x, self.__y, self.__width, self.__height
         )
 
-    def update(self, *args):
-        """Assigns an argument to each attribute in positional order."""
+    def update(self, *args, **kwargs):
+        """Assigns key/value argument to attributes or positional args."""
         attrs = ["id", "width", "height", "x", "y"]
-        for i, arg in enumerate(args):
-            if i < len(attrs):
-                setattr(self, attrs[i], arg)
+        if args and len(args) > 0:
+            for i, arg in enumerate(args):
+                if i < len(attrs):
+                    setattr(self, attrs[i], arg)
+        elif kwargs:
+            for key, value in kwargs.items():
+                if hasattr(self, key):
+                    setattr(self, key, value)
