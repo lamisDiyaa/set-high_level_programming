@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Module that contains the Base class."""
+import csv
 import json
 import os
 
@@ -64,3 +65,51 @@ class Base:
             json_str = f.read()
         list_dicts = cls.from_json_string(json_str)
         return [cls.create(**d) for d in list_dicts]
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """Serializes list_objs to CSV file."""
+        filename = "{}.csv".format(cls.__name__)
+        with open(filename, "w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            if list_objs is not None:
+                for obj in list_objs:
+                    if cls.__name__ == "Rectangle":
+                        writer.writerow(
+                            [obj.id, obj.width, obj.height, obj.x, obj.y]
+                        )
+                    elif cls.__name__ == "Square":
+                        writer.writerow(
+                            [obj.id, obj.size, obj.x, obj.y]
+                        )
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """Deserializes list of instances from CSV file."""
+        filename = "{}.csv".format(cls.__name__)
+        if not os.path.isfile(filename):
+            return []
+        instances = []
+        with open(filename, "r", newline="", encoding="utf-8") as f:
+            reader = csv.reader(f)
+            for row in reader:
+                if not row:
+                    continue
+                row = [int(i) for i in row]
+                if cls.__name__ == "Rectangle":
+                    d = {
+                        "id": row[0],
+                        "width": row[1],
+                        "height": row[2],
+                        "x": row[3],
+                        "y": row[4]
+                    }
+                elif cls.__name__ == "Square":
+                    d = {
+                        "id": row[0],
+                        "size": row[1],
+                        "x": row[2],
+                        "y": row[3]
+                    }
+                instances.append(cls.create(**d))
+        return instances
